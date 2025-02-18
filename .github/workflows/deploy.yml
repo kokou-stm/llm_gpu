@@ -8,17 +8,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # Étape 1 : Configurer Google Cloud Credentials
       - name: Set up Google Cloud credentials
         uses: google-github-actions/setup-gcloud@v0
         with:
-          project_id: premium-axis-450910-f6
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+          project_id: YOUR_PROJECT_ID  # Remplacez par votre ID de projet Google Cloud
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}  # Utilise le secret contenant la clé JSON
 
+      # Étape 2 : Construire et déployer l'application sur Cloud Run
       - name: Build and deploy to Google Cloud Run
         run: |
           gcloud builds submit --tag gcr.io/premium-axis-450910-f6/fastapi-app
           gcloud run deploy fastapi-app --image gcr.io/premium-axis-450910-f6/fastapi-app --platform managed --region us-central1 --allow-unauthenticated
+
+
+
+       
