@@ -15,10 +15,10 @@ jobs:
       - name: Set up Google Cloud credentials
         uses: google-github-actions/setup-gcloud@v0
         with:
-          project_id: YOUR_PROJECT_ID
+          project_id: premium-axis-450910-f6
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Build and deploy to Google Cloud Run
         run: |
-          gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/fastapi-app
-          gcloud run deploy fastapi-app --image gcr.io/YOUR_PROJECT_ID/fastapi-app --platform managed --region us-central1 --allow-unauthenticated
+          gcloud builds submit --tag gcr.io/premium-axis-450910-f6/fastapi-app
+          gcloud run deploy fastapi-app --image gcr.io/premium-axis-450910-f6/fastapi-app --platform managed --region us-central1 --allow-unauthenticated
