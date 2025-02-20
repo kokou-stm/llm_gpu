@@ -17,7 +17,7 @@ jobs:
       - name: Set up Google Cloud credentials
         uses: google-github-actions/setup-gcloud@v0
         with:
-          project_id: YOUR_PROJECT_ID  # Remplacez par votre ID de projet Google Cloud
+          project_id: premium-axis-450910-f6  # Remplacez par votre ID de projet Google Cloud
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}  # Utilise le secret contenant la clé JSON
 
       # Étape 2 : Construire et déployer l'application sur Cloud Run
