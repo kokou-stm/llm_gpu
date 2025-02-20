@@ -13,19 +13,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Étape 1 : Configurer Google Cloud Credentials
-      - name: Set up Google Cloud credentials
-        uses: google-github-actions/setup-gcloud@v0
+      # Étape 1 : Authentification avec Google Cloud
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v1
         with:
-          project_id: premium-axis-450910-f6  # Remplacez par votre ID de projet Google Cloud
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}  # Utilise le secret contenant la clé JSON
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      # Étape 2 : Construire et déployer l'application sur Cloud Run
+      # Étape 2 : Installer le SDK Google Cloud
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: premium-axis-450910-f6
+
+      # Étape 3 : Vérifier l'authentification
+      - name: Verify Authentication
+        run: gcloud auth list
+
+      # Étape 4 : Construire et déployer sur Cloud Run
       - name: Build and deploy to Google Cloud Run
         run: |
           gcloud builds submit --tag gcr.io/premium-axis-450910-f6/fastapi-app
           gcloud run deploy fastapi-app --image gcr.io/premium-axis-450910-f6/fastapi-app --platform managed --region us-central1 --allow-unauthenticated
-
-
-
-       
