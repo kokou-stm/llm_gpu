@@ -1,20 +1,18 @@
-# Utilisez une image de base Python
+# Utilise une image légère de Python 3.9
 FROM python:3.9-slim
 
-# Répertoire de travail dans le conteneur
+# Définit le répertoire de travail
 WORKDIR /app
 
-# Copiez les fichiers de votre projet dans le conteneur
-COPY ./requirements.txt /app/requirements.txt
+# Copie et installe les dépendances
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Installez les dépendances
-RUN pip install -r requirements.txt
+# Copie l'application FastAPI
+COPY app/ app/
 
-# Copiez l'application FastAPI
-COPY ./app /app/app
-
-# Exposez le port sur lequel Uvicorn va écouter
+# Expose le port 8080 pour Uvicorn
 EXPOSE 8080
 
 # Commande pour lancer l'application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
